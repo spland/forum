@@ -7,6 +7,17 @@ spring:
   jpa:
     show-sql: true
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+  security:
+    oauth2:
+      clientId: forum_client
+      clientSecret: user
+      checkTokenUrl:
+      resourceId: forum_api
+      getTokenUrl: http://localhost:8001/oauth/token
+  freemarker:
+    suffix: .html
+    template-loader-path: classpath:/templates/html/
+    cache: false
 server:
   port: 8098
 

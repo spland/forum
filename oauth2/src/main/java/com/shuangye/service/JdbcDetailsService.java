@@ -1,6 +1,7 @@
 package com.shuangye.service;
 
 import com.shuangye.dao.UserDao;
+import com.shuangye.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,6 +19,12 @@ public class JdbcDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        return (UserDetails)userDao.findByUsername(s);
+        User byUsername = userDao.findByUsername(s);
+        if (byUsername != null){
+            return (UserDetails)userDao.findByUsername(s);
+        }else {
+            throw new UsernameNotFoundException("User" + s + "can not be found");
+        }
+
     }
 }

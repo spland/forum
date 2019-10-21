@@ -18,6 +18,6 @@ public class CustomResourceServerConfigurerAdapter extends ResourceServerConfigu
     private TokenStore tokenStore;
     @Override
     public void configure(ResourceServerSecurityConfigurer resources)throws Exception{
-        resources.resourceId("product_api").tokenStore(tokenStore);
+        resources.resourceId("forum_api").tokenStore(tokenStore);
     }
 }
