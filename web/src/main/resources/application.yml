@@ -11,7 +11,7 @@ spring:
     oauth2:
       clientId: forum_client
       clientSecret: user
-      checkTokenUrl:
+      checkTokenUrl: http://localhost:8001/oauth/check_token
       resourceId: forum_api
       getTokenUrl: http://localhost:8001/oauth/token
   freemarker:

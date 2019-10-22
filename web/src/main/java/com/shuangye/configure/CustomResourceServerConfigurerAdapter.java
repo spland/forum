@@ -1,8 +1,10 @@
 package com.shuangye.configure;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
@@ -16,6 +18,7 @@ import org.springframework.web.client.RestTemplate;
  */
 @Configuration
 @EnableResourceServer
+@EnableGlobalMethodSecurity(prePostEnabled=true)
 public class CustomResourceServerConfigurerAdapter extends ResourceServerConfigurerAdapter {
     @Value("${spring.security.oauth2.checkTokenUrl}")
     String checkTokenUrl;
@@ -25,6 +28,8 @@ public class CustomResourceServerConfigurerAdapter extends ResourceServerConfigu
     String clientSecret;
     @Value("${spring.security.oauth2.resourceId}")
     String resourceId;
+    @Autowired
+    AuthExceptionEntryPoint authExceptionEntryPoint;
     @Bean
     public ResourceServerTokenServices tokenServices() {
         RemoteTokenServices remoteTokenServices = new RemoteTokenServices();
@@ -43,12 +48,14 @@ public class CustomResourceServerConfigurerAdapter extends ResourceServerConfigu
     public void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/user/**").permitAll();
+                .antMatchers("/user/**","/css/**","/js/**").permitAll()
+                .anyRequest().authenticated();
     }
     @Override
     public void configure(ResourceServerSecurityConfigurer oauthServer)throws Exception{
 
         oauthServer.resourceId(resourceId).tokenServices(tokenServices());
+        oauthServer.authenticationEntryPoint(authExceptionEntryPoint);
     }
     @Bean
     public RestTemplate restTemplate(){

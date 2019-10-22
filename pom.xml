@@ -12,6 +12,7 @@
         <module>eureka</module>
         <module>web</module>
         <module>oauth2</module>
+        <module>common</module>
     </modules>
     <properties>
         <spring-cloud-dependencies.version>Greenwich.SR2</spring-cloud-dependencies.version>
