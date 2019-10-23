@@ -54,6 +54,11 @@ public class UserController {
 
         return "login";
     }
+    @RequestMapping("/user/regist")
+    public String register(){
+
+        return "register";
+    }
     @RequestMapping("/user/login")
     public String login(@PathParam("username") String username,@PathParam("password")String password, HttpServletResponse resp) throws IOException {
         String url = getTokenUrl;
