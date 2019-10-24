@@ -5,3 +5,7 @@
 /eureka/eureka.iml
 /common/common.iml
 /oauth2/oauth2.iml
+/common/target/
+/eureka/target/
+/oauth2/target/
+/web/target/
