@@ -59,17 +59,22 @@ public class UserController {
 
         return "register";
     }
+    @RequestMapping("/user/news")
+    public String news(){
+
+        return "news";
+    }
     @RequestMapping("/user/login")
     public String login(@PathParam("username") String username,@PathParam("password")String password, HttpServletResponse resp) throws IOException {
         String url = getTokenUrl;
         HttpResponse response = getRemoteResponse(url);
         if (response.getStatusLine().getStatusCode() == 200) {
             InputStream body = response.getEntity().getContent();
-            String data= getStringFromInputStream(body);
+            String data = getStringFromInputStream(body);
             ObjectMapper mapper = new ObjectMapper();
             JsonNode actualObj = mapper.readTree(data);
             String token = actualObj.get("access_token").toString();
-            resp.addHeader("access_token",token);
+            resp.addHeader("access_token", token);
         }
         return "index";
 
@@ -78,7 +83,8 @@ public class UserController {
         HttpPost httpPost = new HttpPost(url);
         httpPost.setHeader("Authorization", "Basic Zm9ydW1fY2xpZW50OnVzZXI=");
         org.apache.http.client.HttpClient httpClient = HttpClients.createDefault();
-        RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(30000).setConnectTimeout(30000).build();//设置请求和传输超时时间,单位毫秒
+        //设置请求和传输超时时间,单位毫秒
+        RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(30000).setConnectTimeout(30000).build();
         httpPost.setConfig(requestConfig);
         HttpResponse response = httpClient.execute(httpPost);
         return response;
