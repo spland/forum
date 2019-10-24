@@ -3,3 +3,9 @@
 /forum.iml
 /web/web.iml
 /eureka/eureka.iml
+/common/common.iml
+/common/target/
+/eureka/target/
+/oauth2/target/
+/oauth2/oauth2.iml
+/web/target/
